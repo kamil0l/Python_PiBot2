@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger("drive_square")
 
 def drive_distances(bot, left_distance, right_distance, speed=80):
-    # Chcemy, aby główny silnik zawsze pokonywał dłuższy dystans, dlatego musi obracać się szybciej
+
     if abs(left_distance) >= abs(right_distance):
         logger.info("Lewy jest głównym silnkiem")
         set_primary = bot.set_left
@@ -31,28 +31,28 @@ def drive_distances(bot, left_distance, right_distance, speed=80):
 
     controller = PIController(proportional_constant=5, integral_constant=0.2)
 
-    # Upewnienie się, że enkoder wie, w którą stronę się kręci
+
     primary_encoder.set_direction(math.copysign(1, speed))
     secondary_encoder.set_direction(math.copysign(1, secondary_speed))
 
-    # Uruchomienie silników i pętli
+
     set_primary(speed)
     set_secondary(int(secondary_speed))
     while abs(primary_encoder.pulse_count) < abs(primary_distance) or abs(secondary_encoder.pulse_count) < abs(secondary_distance):
         time.sleep(0.01)
-        # Jaka jest wartość uchybu?
+
         secondary_target = primary_encoder.pulse_count * primary_to_secondary_ratio
         error = secondary_target - secondary_encoder.pulse_count
         adjustment = controller.get_value(error)
-        # Jak szybko silniki powinny się poruszać, aby jechać prosto?
+
         set_secondary(int(secondary_speed + adjustment))
         secondary_encoder.set_direction(math.copysign(1, secondary_speed+adjustment))
 
-        # Log
+
         logger.debug(f"Enkodery: główny: {primary_encoder.pulse_count}, drugorzędny: {secondary_encoder.pulse_count}," 
                     f"uchyb:{error} korekta: {adjustment:.2f}")
         logger.info(f"Odległości: główny: {primary_encoder.distance_in_mm()} mm, drugorzędny: {secondary_encoder.distance_in_mm()} mm")
-        # Zatrzymanie głównego silnika
+
         if abs(primary_encoder.pulse_count) >= abs(primary_distance):
             logger.info("główny stop")
             set_primary(0)
@@ -60,7 +60,7 @@ def drive_distances(bot, left_distance, right_distance, speed=80):
 
 def drive_arc(bot, turn_in_degrees, radius, speed=80):
     """ Skręt opiera się na zmianie położenia czoła robota """
-    # Pobranie szerokości robota w tyknięciach
+
     half_width_ticks = EncoderCounter.mm_to_ticks(bot.wheel_distance_mm/2.0)
     if turn_in_degrees < 0:
         left_radius = radius - half_width_ticks

@@ -14,7 +14,7 @@ pid = PIController(0.7, 0.01)
 robot = Robot()
 base_speed = 70
 
-# Ustawienie docelowej wartości odchylenia
+
 heading_set_point = 0
 
 while True:
