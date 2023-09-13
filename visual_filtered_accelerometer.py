@@ -21,9 +21,9 @@ while True:
     roll = filter(roll, new_roll)
 
     print(f"Pochylenie: {pitch:.2f}, Przechylenie: {roll:.2f}")
-    # Reset modelu
+
     model.up = vp.vector(0, 1, 0)
     model.axis = vp.vector(1, 0, 0)
-    # Ustawienie w pozycji początkowej
+
     model.rotate(angle=vp.radians(roll), axis=vp.vector(1, 0, 0))
     model.rotate(angle=vp.radians(pitch), axis=vp.vector(0, 1, 0))
