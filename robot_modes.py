@@ -3,7 +3,7 @@ import subprocess
 class RobotModes(object):
     """Zachownaia i testy robota jako jego tryby działania"""
 
-    # Słownik, gdzie powiązano nazwę tryby ze skryptem do uruchomienia.
+
     mode_config = {
         "avoid_behavior": {"script": "avoid_behavior.py"},
         "circle_head": {"script": "circle_pan_tilt_behavior.py"},
@@ -34,11 +34,11 @@ class RobotModes(object):
         self.current_process = None
 
     def is_running(self):
-        """Sprawdzenie, czy jest już uruchomiony jakiś proces. Zmienna returncode jest ustawiana tylko po zakończonym procesie."""
+
         return self.current_process and self.current_process.returncode is None
 
     def run(self, mode_name):
-        """Uruchom tryb jako podproces, lecz nie rób tego, gdy inny już jest uruchomiony."""
+
         while self.is_running():
             self.stop()
 
@@ -46,10 +46,9 @@ class RobotModes(object):
         self.current_process = subprocess.Popen(["python3", script])
 
     def stop(self):
-        """Stop a process"""
+
         if self.is_running():
-            # Wysyłanie sygnału sigint jest (w systemie Linux) podobne do naciśnięcia Ctrl+C.
-            # To powoduje zakończenie procesu i wyczyszczenie wszystkich jego danych.
+
 
             self.current_process.send_signal(subprocess.signal.SIGINT)
             self.current_process = None
