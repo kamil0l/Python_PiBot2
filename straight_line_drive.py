@@ -18,12 +18,12 @@ pid = PIController(proportional_constant=4, integral_constant=0.3)
 
 while time.time() < stop_at_time:
     time.sleep(0.01)
-    # Obliczenie uchybu
+
     left = bot.left_encoder.pulse_count
     right = bot.right_encoder.pulse_count
     error = left - right
 
-    # Przypisanie prędkości
+
     adjustment = pid.get_value(error)
     right_speed = int(speed + adjustment)
     left_speed = int(speed - adjustment)
