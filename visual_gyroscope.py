@@ -26,10 +26,9 @@ while True:
     pitch += gyro.y * dt
     yaw += gyro.z * dt
 
-    # Reset modelu
     model.up = vp.vector(0, 1, 0)
     model.axis = vp.vector(1, 0, 0)
-    # Ustawienie modelu w pozycji początkowej
+
     model.rotate(angle=vp.radians(roll), axis=vp.vector(1, 0, 0))
     model.rotate(angle=vp.radians(pitch), axis=vp.vector(0, 1, 0))
     model.rotate(angle=vp.radians(yaw), axis=vp.vector(0, 0, 1))
