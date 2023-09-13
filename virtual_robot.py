@@ -3,12 +3,12 @@ from robot_pose import robot_view
 
 
 def make_robot():
-    chassis_width = 155     # szerokość podwozia, od lewej do prawej
-    chassis_thickness = 3   # grubośc plastiku
-    chassis_length = 200    # długość podwozia do przodu do tyłu
+    chassis_width = 155
+    chassis_thickness = 3
+    chassis_length = 200
     wheel_thickness = 26
     wheel_diameter = 70
-    axle_x = 30             # oś koła
+    axle_x = 30
     axle_z = -20
     castor_position = vp.vector(-80, -6, -30)
     castor_radius = 14
@@ -17,7 +17,7 @@ def make_robot():
     base = vp.box(length=chassis_length,
                   height=chassis_thickness,
                   width=chassis_width)
-    # obróć by dopasować do robota - i tak Z to wysokość, a Y to szerokość
+
     base.rotate(angle=vp.radians(90),
                 axis=vp.vector(1, 0, 0))
     wheel_dist = chassis_width/2
