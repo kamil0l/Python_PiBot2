@@ -2,7 +2,7 @@ from robot import Robot
 from time import sleep
 
 class ObstacleAvoidingBehavior:
-    """Proste unikanie przeszkód"""
+
     def __init__(self, the_robot):
         self.robot = the_robot
         self.speed = 60
@@ -49,7 +49,7 @@ class ObstacleAvoidingBehavior:
             nearest_speed = -self.speed * 0.4
             furthest_speed = -self.speed
             delay = 100
-        else: # Kolizja
+        else:
             nearest_speed = -self.speed
             furthest_speed = -self.speed
             delay = 250
