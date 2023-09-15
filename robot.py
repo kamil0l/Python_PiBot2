@@ -181,3 +181,23 @@ while True:
     scatter_xy.plot(mag.x, mag.y)
     scatter_yz.plot(mag.y, mag.z)
     scatter_zx.plot(mag.z, mag.x)
+
+imu = RobotImu(mag_offsets=imu_settings.mag_offsets,
+               gyro_offsets=imu_settings.gyro_offsets)
+fusion = ImuFusion(imu)
+timer = DeltaTimer()
+pid = PIController(0.7, 0.01)
+robot = Robot()
+base_speed = 70
+
+
+heading_set_point = 0
+
+while True:
+    dt, elapsed = timer.update()
+    fusion.update(dt)
+    heading_error = fusion.yaw - heading_set_point
+    steer_value = pid.get_value(heading_error, delta_time=dt)
+    print(f"Błąd: {heading_error}, Wartość:{steer_value:2f}, czas: {elapsed}")
+    robot.set_left(base_speed + steer_value)
+    robot.set_right(base_speed - steer_value)
