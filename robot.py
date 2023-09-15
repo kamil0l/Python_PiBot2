@@ -82,3 +82,17 @@ class Robot:
     def set_tilt(self, angle):
         self.servos.set_servo_angle(0, angle)
 
+logging.basicConfig(level=logging.INFO)
+imu = RobotImu()
+robot_view()
+
+accel_arrow = vp.arrow(axis=vp.vector(0, 1, 0))
+x_arrow = vp.arrow(axis=vp.vector(1, 0, 0), color=vp.color.red)
+y_arrow = vp.arrow(axis=vp.vector(0, 1, 0), color=vp.color.green)
+z_arrow = vp.arrow(axis=vp.vector(0, 0, 1), color=vp.color.blue)
+
+while True:
+    vp.rate(100)
+    accel = imu.read_accelerometer()
+    print(f"Akcelerometr: {accel}")
+    accel_arrow.axis = accel.norm()
