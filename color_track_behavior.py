@@ -32,11 +32,10 @@ class ColorTrackingBehavior:
                 exit()
 
     def find_object(self, original_frame):
-        """Znajdź największe koło dla wszystkich obrysów na obrazie z maską.
-        Funkcja zwraca: obraz z maską, współrzędne obiektu, promień obiektu"""
+
         frame_hsv = cv2.cvtColor(original_frame, cv2.COLOR_BGR2HSV)
         masked = cv2.inRange(frame_hsv, self.low_range, self.high_range)
-        # Znalezienie konturów na obrazie (punktów obrysu)
+
         contours, _ = cv2.findContours(masked, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         circles = [cv2.minEnclosingCircle(cnt) for cnt in contours]
         largest = (0, 0), 0
@@ -46,18 +45,17 @@ class ColorTrackingBehavior:
         return masked, largest[0], largest[1]
 
     def make_display(self, frame, processed):
-        """Stwórz dane przeznaczone do wyświetlania i dodaj je do kolejki"""
-        # Stworzenie widoku dwuekranowego - dwa obrazy, w tej samej skali, połączone ze sobą
+
         display_frame = np.concatenate((frame, processed), axis=1)
         encoded_bytes = camera_stream.get_encoded_bytes_for_frame(display_frame)
         put_output_image(encoded_bytes)
 
     def process_frame(self, frame):
-        # Znalezienie największego koła
+
         masked, coordinates, radius = self.find_object(frame)
-        # Powrót do 3 kanałów w celu wyświetlenia obrazu
+
         processed = cv2.cvtColor(masked, cv2.COLOR_GRAY2BGR)
-        # Narysowanie koła na oryginalnej klatce, a następnie jej wyświetlenie
+
         cv2.circle(frame, coordinates, radius, [255, 0, 0])
         self.make_display(frame, processed)
         return coordinates, radius
@@ -87,7 +85,7 @@ class ColorTrackingBehavior:
                 direction_value = direction_pid.get_value(direction_error)
 
                 print(f"{radius}, {radius_error}, {speed_value:.2f}, {direction_error}, {direction_value:.2f}")
-                # Wyznaczenie prędkości dla lewego i prawego silnika
+
                 self.robot.set_left(speed_value - direction_value)
                 self.robot.set_right(speed_value + direction_value)
             else:

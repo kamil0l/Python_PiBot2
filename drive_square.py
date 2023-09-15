@@ -59,7 +59,7 @@ def drive_distances(bot, left_distance, right_distance, speed=80):
             secondary_speed = 0
 
 def drive_arc(bot, turn_in_degrees, radius, speed=80):
-    """ Skręt opiera się na zmianie położenia czoła robota """
+
 
     half_width_ticks = EncoderCounter.mm_to_ticks(bot.wheel_distance_mm/2.0)
     if turn_in_degrees < 0:

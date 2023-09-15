@@ -2,9 +2,9 @@ from flask import Flask, render_template, jsonify
 from robot_modes import RobotModes
 from leds_led_shim import Leds
 
-# Aplikacja Flask App zawiera wszystkie ścieżki.
+
 app = Flask(__name__)
-# Przygotowanie trybów robota do użycia
+
 mode_manager = RobotModes()
 leds = Leds()
 leds.set_one(1, [0, 255, 0])
@@ -30,7 +30,7 @@ def run(mode_name):
         leds.show()
         leds = None
 
-    # Użycie naszej aplikacji do uruchomienia procesu powiązanego z nazwą trybu (mode_name)
+
     mode_manager.run(mode_name)
     response = {'message': f'{mode_name} uruchomiony'}
     if mode_manager.should_redirect(mode_name):
@@ -40,7 +40,7 @@ def run(mode_name):
 
 @app.route("/stop", methods=['POST'])
 def stop():
-    # Nakazanie naszemu systemowi, by zatrzymał wykonywany właśnie proces
+
     mode_manager.stop()
     return jsonify({'message': "Zatrzymano"})
 
