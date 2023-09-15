@@ -96,3 +96,10 @@ while True:
     accel = imu.read_accelerometer()
     print(f"Akcelerometr: {accel}")
     accel_arrow.axis = accel.norm()
+
+
+r = robot.Robot()
+r.set_left(100)
+r.set_right(70)
+sleep(1)
+
