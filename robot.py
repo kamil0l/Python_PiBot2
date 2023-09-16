@@ -313,3 +313,21 @@ def show_rainbow(leds, led_range):
         rgb = colorsys.hsv_to_rgb(hue, 1.0, 0.6)
         rgb = [int(c*255) for c in rgb]
         leds.set_one(led_address, rgb)
+
+
+from robot import Robot
+from time import sleep
+
+bot = Robot()
+red = (255, 0, 0)
+blue = (0, 0, 255)
+
+while True:
+    print("czerwony")
+    bot.leds.set_all(red)
+    bot.leds.show()
+    sleep(0.5)
+    print("niebieski")
+    bot.leds.set_all(blue)
+    bot.leds.show()
+    sleep(0.5)
