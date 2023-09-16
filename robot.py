@@ -331,3 +331,20 @@ while True:
     bot.leds.set_all(blue)
     bot.leds.show()
     sleep(0.5)
+
+
+logging.basicConfig(level=logging.INFO)
+imu = RobotImu()
+robot_view()
+
+mag_arrow = vp.arrow(pos=vp.vector(0, 0, 0))
+x_arrow = vp.arrow(axis=vp.vector(1, 0, 0), color=vp.color.red)
+y_arrow = vp.arrow(axis=vp.vector(0, 1, 0), color=vp.color.green)
+z_arrow = vp.arrow(axis=vp.vector(0, 0, 1), color=vp.color.blue) #/// jednak musi być
+
+while True:
+    vp.rate(100)
+
+    mag = imu.read_magnetometer()
+    mag_arrow.axis = mag.norm()
+    print(f"Magnetometr: {mag}")
