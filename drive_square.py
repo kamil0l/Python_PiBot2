@@ -87,3 +87,16 @@ for n in range(4):
     drive_distances(bot, distance_in_ticks, distance_in_ticks)
     drive_arc(bot, 90, radius_in_ticks, speed=50)
 
+import time
+
+
+class DeltaTimer:
+    def __init__(self):
+        self.last = self.start = time.time()
+
+    def update(self):
+        current = time.time()
+        dt = current - self.last
+        elapsed = current - self.start
+        self.last = current
+        return dt, elapsed
