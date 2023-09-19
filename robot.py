@@ -831,3 +831,15 @@ while time.time() < stop_at_time:
         ticks_to_mm(bot.right_encoder.pulse_count)))
     time.sleep(0.05)
 
+logging.basicConfig(level=logging.INFO)
+imu = RobotImu()
+vp.graph(xmin=0, xmax=60, scroll=True)
+temp_graph = vp.gcurve()
+start = time.time()
+while True:
+    vp.rate(100)
+    temperature = imu.read_temperature()
+    logging.info("Temperatura {}".format(temperature))
+    elapsed = time.time() - start
+    temp_graph.plot(elapsed, temperature)
+
